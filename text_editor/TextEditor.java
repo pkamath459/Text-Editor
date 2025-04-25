@@ -155,7 +155,7 @@ public class TextEditor extends JFrame implements ActionListener
 		if(e.getSource() == saveItem)
 		{
 			JFileChooser chooseFile = new JFileChooser();
-			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
+			chooseFile.setCurrentDirectory(new File("."));
 			
 			int response = chooseFile.showSaveDialog(null);
 			if(response == JFileChooser.APPROVE_OPTION)
