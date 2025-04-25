@@ -153,7 +153,7 @@ public class TextEditor extends JFrame implements ActionListener
 		{
 			JFileChooser chooseFile = new JFileChooser();
 			//Setting the default location of the file to be opened.
-			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
+			chooseFile.setCurrentDirectory(new File("."));
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
 			chooseFile.setFileFilter(filter);
 			
@@ -190,7 +190,7 @@ public class TextEditor extends JFrame implements ActionListener
 		{
 			JFileChooser chooseFile = new JFileChooser();
 			//Setting the default location of the file to be saved.
-			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
+			chooseFile.setCurrentDirectory(new File("."));
 			
 			//Showing the saving window.
 			int response = chooseFile.showSaveDialog(null);
