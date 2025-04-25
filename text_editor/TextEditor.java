@@ -20,7 +20,7 @@ public class TextEditor extends JFrame implements ActionListener
 	JMenuItem openItem;
 	JMenuItem saveItem;
 	JMenuItem exitItem;
-	
+
 	//Constructor to initialize the editor and load all its components.
 	public TextEditor()
 	{
@@ -90,12 +90,13 @@ public class TextEditor extends JFrame implements ActionListener
 		saveItem.addActionListener(this);
 		exitItem.addActionListener(this);
 		
-		//Setting the 
+		//Setting the Menu items inside the menu bar.
 		fileMenu.add(openItem);
 		fileMenu.add(saveItem);
 		fileMenu.add(exitItem);
 		menuBar.add(fileMenu);
-		  
+
+		//Calling all the initialized Frames.
 		this.setJMenuBar(menuBar);
 		this.add(fontLabel);
 		this.add(fontSize);
@@ -104,21 +105,22 @@ public class TextEditor extends JFrame implements ActionListener
 		this.add(scrolling);
 		this.setVisible(true);
 	}
-	 
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(e.getSource()==fontColor)
+		//Checking if the action was performed to change the font color and implementing the same to the contents of the editor. 
+		if(e.getSource() == fontColor)
 		{
-			JColorChooser colorChooser = new JColorChooser();
-			Color color = colorChooser.showDialog(null, "Choose a color", Color.black);
+			JColorChooser selectColor = new JColorChooser();
+			Color color = selectColor.showDialog(null, "Choose a color", Color.black);
 			textArea.setForeground(color);
 		}
-	  
-		if(e.getSource()==fontBox)
+
+		//If the action was performed to change the color of the font, then implement the same.
+		if(e.getSource() == fontBox)
 		{
 			textArea.setFont(new Font((String)fontBox.getSelectedItem(),Font.PLAIN,textArea.getFont().getSize()));
 		}
-
 	}
 }
