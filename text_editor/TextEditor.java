@@ -3,10 +3,12 @@ package text_editor;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Scanner;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TextEditor extends JFrame implements ActionListener
 {
@@ -149,15 +151,50 @@ public class TextEditor extends JFrame implements ActionListener
 		
 		if(e.getSource() == openItem)
 		{
+			JFileChooser chooseFile = new JFileChooser();
+			//Setting the default location of the file to be opened.
+			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
+			chooseFile.setFileFilter(filter);
 			
+			int response = chooseFile.showOpenDialog(null);
+			if(response == JFileChooser.APPROVE_OPTION)
+			{
+				File file = new File(chooseFile.getSelectedFile().getAbsolutePath());
+				Scanner fileIn = null;
+				
+				try
+				{
+					fileIn = new Scanner(file);
+					if(file.isFile())
+					{
+						while(fileIn.hasNextLine())
+						{
+							String line = fileIn.nextLine() + "\n";
+							textArea.append(line);
+						}
+					}
+				}
+				catch (FileNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
+				finally
+				{
+					fileIn.close();
+				}
+			}
 		}
 		
 		if(e.getSource() == saveItem)
 		{
 			JFileChooser chooseFile = new JFileChooser();
-			chooseFile.setCurrentDirectory(new File("."));
+			//Setting the default location of the file to be saved.
+			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
 			
+			//Showing the saving window.
 			int response = chooseFile.showSaveDialog(null);
+			//If "Yes" is selected...
 			if(response == JFileChooser.APPROVE_OPTION)
 			{
 				File file;
