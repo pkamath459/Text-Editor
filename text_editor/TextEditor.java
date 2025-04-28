@@ -104,12 +104,17 @@ public class TextEditor extends JFrame implements ActionListener
 		//Setting the file menu item into the menu bar.
 		menuBar.add(fileMenu);
 
-//		menuBar.add(fontLabel);
-//		menuBar.add(fontSize);
-//		menuBar.add(fontColor);
-//		menuBar.add(bgColor);
-//		menuBar.add(fontBox);
+		/*
+		*The below code is to implement the above items into the menu bar
+		menuBar.add(fontLabel);
+		menuBar.add(fontSize);
+		menuBar.add(fontColor);
+		menuBar.add(bgColor);
+		menuBar.add(fontBox);
 		
+		*Comment all the frames mentioned below - same as the ones uncommented above. 
+		*/
+
 		//Calling all the initialized Frames.
 		this.setJMenuBar(menuBar);
 		this.add(fontLabel);
@@ -142,43 +147,58 @@ public class TextEditor extends JFrame implements ActionListener
 			textArea.setFont(new Font((String)fontBox.getSelectedItem(),Font.PLAIN,textArea.getFont().getSize()));
 		}
 		
+		//If action performed is clicking the background color change button.
 		if(e.getSource() == bgColor)
 		{
 			JColorChooser selectColor = new JColorChooser();
+			//Showing the color selector window.
 			Color color = selectColor.showDialog(null, "Pick a color", Color.black);
+			//Applying the selected color to the background.
 			textArea.setBackground(color);
 		}
 		
+		//Open item is clicked.
 		if(e.getSource() == openItem)
 		{
 			JFileChooser chooseFile = new JFileChooser();
 			//Setting the default location of the file to be opened.
-			chooseFile.setCurrentDirectory(new File("."));
+			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
+			//Add filters for the file name extensions - giving lists for certain file types.
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
+			//Setting the chosen filter/list item of the file type.
 			chooseFile.setFileFilter(filter);
 			
 			int response = chooseFile.showOpenDialog(null);
 			if(response == JFileChooser.APPROVE_OPTION)
 			{
+				//Get the file selected by the user from the file path and set it to an object.
 				File file = new File(chooseFile.getSelectedFile().getAbsolutePath());
+				//New scanner to read the file - will be initialized as a new file type scanner.
 				Scanner fileIn = null;
 				
+				//To deal with file issues like corruption, locking, permission problems, try-catch is used.
 				try
 				{
 					fileIn = new Scanner(file);
+					//If the file is a type of file, then
 					if(file.isFile())
 					{
+						//Check if there is another line in the file.
 						while(fileIn.hasNextLine())
 						{
+							//While it is true, return that line and append the next line to that.
 							String line = fileIn.nextLine() + "\n";
+							//Then append that new line to the existing line present in the text area.
 							textArea.append(line);
 						}
 					}
 				}
+				//Catch errors popping up from file related issues.
 				catch (FileNotFoundException e1)
 				{
 					e1.printStackTrace();
 				}
+				//After all the process is complete, close the scanner class to prevent resource leak/file corruption and to free up system memory..
 				finally
 				{
 					fileIn.close();
@@ -186,11 +206,12 @@ public class TextEditor extends JFrame implements ActionListener
 			}
 		}
 		
+		//Save file option is clicked.
 		if(e.getSource() == saveItem)
 		{
 			JFileChooser chooseFile = new JFileChooser();
 			//Setting the default location of the file to be saved.
-			chooseFile.setCurrentDirectory(new File("."));
+			chooseFile.setCurrentDirectory(new File("D://Skills/Eclipse backup/Text editor files"));
 			
 			//Showing the saving window.
 			int response = chooseFile.showSaveDialog(null);
@@ -198,12 +219,15 @@ public class TextEditor extends JFrame implements ActionListener
 			if(response == JFileChooser.APPROVE_OPTION)
 			{
 				File file;
+				//Initializing the object to write the data into the file.
 				PrintWriter fileOut = null;
 				
 				file = new File(chooseFile.getSelectedFile().getAbsolutePath());
 				try
 				{
+					//Opening the file and writing into it.
 					fileOut = new PrintWriter(file);
+					//Gets the current text in the text area and writes it into the file.
 					fileOut.println(textArea.getText());
 				}
 				catch (FileNotFoundException e1)
@@ -216,7 +240,7 @@ public class TextEditor extends JFrame implements ActionListener
 				}
 			}
 		}
-		
+		//If the exit button is clicked. Exit the application immediately.
 		if(e.getSource() == exitItem)
 		{
 			System.exit(0);
